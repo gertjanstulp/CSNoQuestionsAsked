@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoQuestionsAsked", "NoQuestionsAsked.csproj", "{15325869-E1AB-46A4-AE51-DC01B98510A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoQuestionsAsked", "src\NoQuestionsAsked\NoQuestionsAsked.csproj", "{15325869-E1AB-46A4-AE51-DC01B98510A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B75540DF-EE72-4CE9-86E6-CB95C3403DEF}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
