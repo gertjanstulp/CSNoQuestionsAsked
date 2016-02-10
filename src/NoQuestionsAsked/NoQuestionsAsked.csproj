@@ -62,7 +62,7 @@
     <Compile Include="UI\UITexts.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PreviewImage.jpg" />
+    <Content Include="PreviewImage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
