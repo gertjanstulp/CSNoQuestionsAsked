@@ -37,7 +37,7 @@ Many thanks to those guys!
 using System;
 using System.Reflection;
 
-namespace QuickBuildozer
+namespace NoQuestionsAsked
 {
     public struct RedirectCallsState
     {

@@ -6,13 +6,15 @@ using System.Reflection;
 using System.Text;
 using UnityEngine;
 
-namespace QuickBuildozer
+namespace NoQuestionsAsked
 {
     public class CustomBuldozeTool : DefaultTool
     {
         public IEnumerator TryDeleteBuilding(ushort building)
         {
-            return new TryDeleteBuildingEnumerator( GameObject.FindObjectOfType<BulldozeTool>(), building);
+            // The original TryDeleteBuilding invocation has been redirected to this method using the Detour library. This method should return
+            // an IEnumerator implementation for doing the actual work.
+            return new TryDeleteBuildingEnumerator(building);
         }
     }
 }

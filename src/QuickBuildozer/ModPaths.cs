@@ -5,13 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace QuickBuildozer
+namespace NoQuestionsAsked
 {
     public static class ModPaths
     {
-        private const string ModRootFolderName = "QuickBuildozer";
-        private const string ConfigurationFileName = "QuickBuildozer.xml";
-        private const string LogFileName = "QuickBuildozer.log";
+        private const string ModRootFolderName = "NoQuestionsAsked";
+        private const string ConfigurationFileName = "NoQuestionsAsked.xml";
+        private const string LogFileName = "NoQuestionsAsked.log";
 
         public static string GetConfigurationFilePath()
         {

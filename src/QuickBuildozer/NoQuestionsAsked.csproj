@@ -7,8 +7,8 @@
     <ProjectGuid>{15325869-E1AB-46A4-AE51-DC01B98510A8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QuickBuildozer</RootNamespace>
-    <AssemblyName>QuickBuildozer</AssemblyName>
+    <RootNamespace>NoQuestionsAsked</RootNamespace>
+    <AssemblyName>NoQuestionsAsked</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="Bulldozer\BulldozeToolExtender.cs" />
     <Compile Include="Bulldozer\CustomBuldozeTool.cs" />
-    <Compile Include="Bulldozer\QuickBulldozerLoader.cs" />
+    <Compile Include="Bulldozer\NoQuestionsAskedLoader.cs" />
     <Compile Include="Configuration\ConfigurationAccessor.cs" />
     <Compile Include="Configuration\ConfigurationContainer.cs" />
     <Compile Include="Contracts\IUserModConfiguration.cs" />
@@ -60,6 +60,9 @@
     <Compile Include="Bulldozer\TryDeleteBuildingEnumerator.cs" />
     <Compile Include="UI\UIModOptionsPanelBuilder.cs" />
     <Compile Include="UI\UITexts.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PreviewImage.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -86,7 +89,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <CSModFolder>C:\Users\gstulp\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\QuickBuildozer</CSModFolder>
+    <CSModFolder>C:\Users\gstulp\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\NoQuestionsAsked</CSModFolder>
   </PropertyGroup>
   <Target Name="CleanupDeployTarget">
     <ItemGroup>
@@ -103,7 +106,7 @@
   </Target>
   <Target Name="DeployAssembly">
     <ItemGroup>
-      <Assemblies Include="$(TargetDir)\QuickBuildozer.dll" />
+      <Assemblies Include="$(TargetDir)\NoQuestionsAsked.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(Assemblies)" DestinationFolder="$(CSModFolder)" />
   </Target>

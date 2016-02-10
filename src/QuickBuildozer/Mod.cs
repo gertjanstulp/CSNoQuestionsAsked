@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QuickBuildozer
+namespace NoQuestionsAsked
 {
     public class Mod : IUserMod, IUserModStateChange, IUserModConfiguration
     {
@@ -30,12 +30,12 @@ namespace QuickBuildozer
         {
             _settingsFilePath = ModPaths.GetConfigurationFilePath();
             Load();
-            ModLogger.Debug("QuickBuildozer mod enabled");
+            ModLogger.Debug("NoQuestionsAsked mod enabled");
         }
 
         public void OnDisabled()
         {
-            ModLogger.Debug("QuickBuildozer mod disabled");
+            ModLogger.Debug("NoQuestionsAsked mod disabled");
             this.Unload();
         }
 

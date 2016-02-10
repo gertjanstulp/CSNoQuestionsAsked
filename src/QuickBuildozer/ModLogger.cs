@@ -34,7 +34,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace QuickBuildozer
+namespace NoQuestionsAsked
 {
     public static class ModLogger
     {
@@ -155,7 +155,7 @@ namespace QuickBuildozer
 
         private static string FormatMessage(string type, string message)
         {
-            return string.Format("[QuickBuildozer] - {0} {1} - {2}", type, DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss.fff"), message);
+            return string.Format("[NoQuestionsAsked] - {0} {1} - {2}", type, DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss.fff"), message);
         }
 
         private static void clearLog()

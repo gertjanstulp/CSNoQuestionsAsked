@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QuickBuildozer
+namespace NoQuestionsAsked
 {
     /// <summary>
     /// Defines methods for performing custom logic when a mod is enabled or disabled in the CS mod configuration window

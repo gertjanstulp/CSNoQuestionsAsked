@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace QuickBuildozer
+namespace NoQuestionsAsked
 {
     public class TryDeleteBuildingEnumerator : IEnumerator, IDisposable, IEnumerator<object>
     {
@@ -18,9 +18,9 @@ namespace QuickBuildozer
 
         private bool _nextResult;
 
-        public TryDeleteBuildingEnumerator(BulldozeTool bulldozeTool, ushort buildingId)
+        public TryDeleteBuildingEnumerator(ushort buildingId)
         {
-            _bulldozeTool = new BulldozeToolExtender(bulldozeTool);
+            _bulldozeTool = new BulldozeToolExtender();
             _buildingId = buildingId;
             _nextResult = true;
         }
@@ -55,6 +55,8 @@ namespace QuickBuildozer
 
         private void DoDelete()
         {
+            // Check if confirmation is required. This is only the case for non-automatic building types and if
+            // configured in the options of this mod.
             if (RequireConfirmation())
                 DeleteWithConfirmation();
             else
@@ -84,6 +86,8 @@ namespace QuickBuildozer
             ConfirmPanel.ShowModal(LocaleID.CONFIRM_BUILDINGDELETE, delegate (UIComponent comp, int ret)
             {
                 if (ret == 1)
+                    // Invoke the default DeleteBuilding method here instead of the tweaked DeleteBuildingImpl, as the custom behavior is
+                    // not required here
                     _bulldozeTool.DeleteBuilding(_buildingId);
             });
         }

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace QuickBuildozer
+namespace NoQuestionsAsked
 {
-    public class QuickBulldozerLoader : LoadingExtensionBase
+    public class NoQuestionsAskedLoader : LoadingExtensionBase
     {
         private LoadMode _mode;
 
@@ -16,12 +16,12 @@ namespace QuickBuildozer
 
         public override void OnCreated(ILoading loading)
         {
-            ModLogger.Debug("QuickBulldozerLoader created");
+            ModLogger.Debug("NoQuestionsAskedLoader created");
         }
 
         public override void OnReleased()
         {
-            ModLogger.Debug("QuickBulldozerLoader released");
+            ModLogger.Debug("NoQuestionsAskedLoader released");
         }
 
         public override void OnLevelLoaded(LoadMode mode)
