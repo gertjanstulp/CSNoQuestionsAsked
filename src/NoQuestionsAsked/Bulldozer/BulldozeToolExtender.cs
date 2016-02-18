@@ -31,6 +31,8 @@ namespace NoQuestionsAsked
             // field).
             try
             {
+                ModLogger.Debug("Starting DeleteBuildingImpl for building {0}", building);
+
                 if (Singleton<BuildingManager>.instance.m_buildings.m_buffer[(int)building].m_flags != Building.Flags.None)
                 {
                     BuildingManager instance = Singleton<BuildingManager>.instance;
@@ -39,6 +41,7 @@ namespace NoQuestionsAsked
                     {
                         SetFieldValue<BulldozeTool.Mode>("m_bulldozingMode", BulldozeTool.Mode.Building);
                         SetFieldValue<ItemClass.Service>("m_bulldozingService", info.m_class.m_service);
+                        SetFieldValue<ItemClass.Layer>("m_bulldozingLayers", info.m_class.m_layer);
                         SetFieldValue<float>("m_deleteTimer", 0.1f);
 
                         int buildingRefundAmount = this.GetBuildingRefundAmount(building);
@@ -72,13 +75,21 @@ namespace NoQuestionsAsked
 
                 ModLogger.Exception(ex);
             }
+            finally
+            {
+                ModLogger.Debug("Finishing DeleteBuildingImpl for building {0}", building);
+            }
         }
 
         public void DeleteBuilding(ushort buildingId)
         {
+            ModLogger.Debug("Starting DeleteBuilding for building {0}", buildingId);
+            
             // Reflection wrapper for invoking the private DeleteBuilding method of the default CO bulldoze tool and returning its' result
             MethodInfo method = typeof(BulldozeTool).GetMethod("DeleteBuilding", BindingFlags.NonPublic | BindingFlags.Instance);
             Singleton<SimulationManager>.instance.AddAction((IEnumerator)method.Invoke(_bulldozeTool, new object[] { buildingId }));
+
+            ModLogger.Debug("Finishing DeleteBuilding for building {0}", buildingId);
         }
 
         private int GetBuildingRefundAmount(ushort building)

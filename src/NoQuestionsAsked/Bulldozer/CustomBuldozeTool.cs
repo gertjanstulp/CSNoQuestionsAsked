@@ -14,6 +14,7 @@ namespace NoQuestionsAsked
         {
             // The original TryDeleteBuilding invocation has been redirected to this method using the Detour library. This method should return
             // an IEnumerator implementation for doing the actual work.
+            ModLogger.Debug("Creating Enumerator for building {0}", building);
             return new TryDeleteBuildingEnumerator(building);
         }
     }

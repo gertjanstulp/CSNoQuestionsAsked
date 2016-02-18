@@ -83,6 +83,8 @@ namespace NoQuestionsAsked
 
         private void DeleteWithConfirmation()
         {
+            ModLogger.Debug("Starting DeleteWithConfirmation for building {0}", _buildingId);
+
             ConfirmPanel.ShowModal(LocaleID.CONFIRM_BUILDINGDELETE, delegate (UIComponent comp, int ret)
             {
                 if (ret == 1)
@@ -90,6 +92,8 @@ namespace NoQuestionsAsked
                     // not required here
                     _bulldozeTool.DeleteBuilding(_buildingId);
             });
+
+            ModLogger.Debug("Finishing DeleteWithConfirmation for building {0}", _buildingId);
         }
 
         public void Dispose()
