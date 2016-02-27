@@ -23,18 +23,26 @@ namespace NoQuestionsAsked
         {
             ModLogger.Debug("Loading configuration from '{0}'", filename);
 
-            ConfigurationContainer result = null;
+            // Assign the filename to the result. This is used later on when saving the configuration.
+            ConfigurationContainer result = new ConfigurationContainer();
 
             // Check if the file exists. If so, deserialize it to a new instance. If not so, create a new empty instance
             if (File.Exists(filename))
             {
-                using (StreamReader sr = new StreamReader(filename))
-                    result = (ConfigurationContainer)new XmlSerializer(typeof(ConfigurationContainer)).Deserialize(sr);
+                try
+                {
+                    using (StreamReader sr = new StreamReader(filename))
+                    {
+                        var attempt = (ConfigurationContainer)new XmlSerializer(typeof(ConfigurationContainer)).Deserialize(sr);
+                        result = attempt;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModLogger.Debug("An error occured while loading the configuration file, default configuration will be applied:{0}{1}", Environment.NewLine, ex.ToString());
+                }
             }
-            else
-                result = new ConfigurationContainer();
-
-            // Assign the filename to the result. This is used later on when saving the configuration.
+            
             result._filename = filename;
 
             ModLogger.Debug("Configuration loaded from '{0}'", filename);
@@ -53,16 +61,25 @@ namespace NoQuestionsAsked
         {
             ModLogger.Debug("Saving configuration to '{0}'", _filename);
 
-            // Make sure the directory exists
-            string dirname = Path.GetDirectoryName(_filename);
-            if (!string.IsNullOrEmpty(dirname) && !Directory.Exists(dirname))
-                Directory.CreateDirectory(dirname);
-
-            // Serialize the configuration to the xml file
-            using (StreamWriter sw = new StreamWriter(_filename))
+            try
             {
-                new XmlSerializer(this.GetType()).Serialize(sw, this);
+                // Make sure the directory exists
+                string dirname = Path.GetDirectoryName(_filename);
+                if (!string.IsNullOrEmpty(dirname) && !Directory.Exists(dirname))
+                    Directory.CreateDirectory(dirname);
+
+                // Serialize the configuration to the xml file
+                using (StreamWriter sw = new StreamWriter(_filename))
+                {
+                    new XmlSerializer(this.GetType()).Serialize(sw, this);
+                }
             }
+            catch (Exception ex)
+            {
+                ModLogger.Warning("An error occured while saving mod configuration to file '{0}'", _filename);
+                ModLogger.Exception(ex);
+            }
+            
         }
     }
 }
