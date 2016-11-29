@@ -37,29 +37,31 @@ namespace NoQuestionsAsked
                 {
                     BuildingManager instance = Singleton<BuildingManager>.instance;
                     BuildingInfo info = instance.m_buildings.m_buffer[(int)building].Info;
-                    if (info.m_buildingAI.CheckBulldozing(building, ref instance.m_buildings.m_buffer[(int)building]) == ToolBase.ToolErrors.None)
+                    if (info.m_buildingAI.CheckBulldozing(building, ref instance.m_buildings.m_buffer[(int)building]) != ToolBase.ToolErrors.None)
                     {
-                        SetFieldValue<BulldozeTool.Mode>("m_bulldozingMode", BulldozeTool.Mode.Building);
-                        SetFieldValue<ItemClass.Service>("m_bulldozingService", info.m_class.m_service);
-                        SetFieldValue<ItemClass.Layer>("m_bulldozingLayers", info.m_class.m_layer);
-                        SetFieldValue<float>("m_deleteTimer", 0.1f);
-
-                        int buildingRefundAmount = this.GetBuildingRefundAmount(building);
-                        if (buildingRefundAmount != 0)
-                        {
-                            Singleton<EconomyManager>.instance.AddResource(EconomyManager.Resource.RefundAmount, buildingRefundAmount, info.m_class);
-                        }
-                        Vector3 position = instance.m_buildings.m_buffer[(int)building].m_position;
-                        float angle = instance.m_buildings.m_buffer[(int)building].m_angle;
-                        int length = instance.m_buildings.m_buffer[(int)building].Length;
-                        instance.ReleaseBuilding(building);
-                        int publicServiceIndex = ItemClass.GetPublicServiceIndex(info.m_class.m_service);
-                        if (publicServiceIndex != -1)
-                        {
-                            Singleton<CoverageManager>.instance.CoverageUpdated(info.m_class.m_service, info.m_class.m_subService, info.m_class.m_level);
-                        }
-                        BuildingTool.DispatchPlacementEffect(info, position, angle, length, true);
+                        return;
                     }
+                    SetFieldValue<BulldozeTool.Mode>("m_bulldozingMode", BulldozeTool.Mode.Building);
+                    SetFieldValue<ItemClass.Service>("m_bulldozingService", info.m_class.m_service);
+                    SetFieldValue<ItemClass.Layer>("m_bulldozingLayers", info.m_class.m_layer);
+                    SetFieldValue<float>("m_deleteTimer", 0.1f);
+                    int buildingRefundAmount = this.GetBuildingRefundAmount(building);
+                    if (buildingRefundAmount != 0)
+                    {
+                        Singleton<EconomyManager>.instance.AddResource(EconomyManager.Resource.RefundAmount, buildingRefundAmount, info.m_class);
+                    }
+                    Vector3 position = instance.m_buildings.m_buffer[(int)building].m_position;
+                    float angle = instance.m_buildings.m_buffer[(int)building].m_angle;
+                    int width = instance.m_buildings.m_buffer[(int)building].Width;
+                    int length = instance.m_buildings.m_buffer[(int)building].Length;
+                    bool collapsed = (instance.m_buildings.m_buffer[(int)building].m_flags & Building.Flags.Collapsed) != Building.Flags.None;
+                    instance.ReleaseBuilding(building);
+                    int publicServiceIndex = ItemClass.GetPublicServiceIndex(info.m_class.m_service);
+                    if (publicServiceIndex != -1)
+                    {
+                        Singleton<CoverageManager>.instance.CoverageUpdated(info.m_class.m_service, info.m_class.m_subService, info.m_class.m_level);
+                    }
+                    BuildingTool.DispatchPlacementEffect(info, building, position, angle, width, length, true, collapsed);
                 }
 
                 var hoverInstance = GetFieldValue<InstanceID>("m_hoverInstance");
