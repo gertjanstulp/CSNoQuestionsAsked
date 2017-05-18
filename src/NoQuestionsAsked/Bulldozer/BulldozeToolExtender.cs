@@ -1,4 +1,5 @@
 ﻿using ColossalFramework;
+using ColossalFramework.Threading;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,10 +13,13 @@ namespace NoQuestionsAsked
     public class BulldozeToolExtender
     {
         private readonly BulldozeTool _bulldozeTool;
+        private System.Reflection.EventInfo _buildingDeletedEvent;
 
         public BulldozeToolExtender()
         {
             _bulldozeTool = GameObject.FindObjectOfType<BulldozeTool>();
+            _buildingDeletedEvent = _bulldozeTool.GetType().GetEvent("m_BuildingDeleted", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            
         }
 
         public void DeleteBuildingImpl(ushort building)
@@ -61,6 +65,20 @@ namespace NoQuestionsAsked
                     {
                         Singleton<CoverageManager>.instance.CoverageUpdated(info.m_class.m_service, info.m_class.m_subService, info.m_class.m_level);
                     }
+                    ThreadHelper.dispatcher.Dispatch(delegate
+                    {
+                        string eventName = "m_BuildingDeleted";
+                        var eventInfo = _bulldozeTool.GetType().GetEvent(eventName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                        var eventDelegate = (MulticastDelegate)_bulldozeTool.GetType().GetField(eventName, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(_bulldozeTool);
+                        if (eventDelegate != null)
+                        {
+                            foreach (var handler in eventDelegate.GetInvocationList())
+                            {
+                                handler.Method.Invoke(handler.Target, new object[] { _bulldozeTool, building });
+                            }
+                        }
+
+                    });
                     BuildingTool.DispatchPlacementEffect(info, building, position, angle, width, length, true, collapsed);
                 }
 
