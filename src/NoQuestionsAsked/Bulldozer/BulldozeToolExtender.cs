@@ -17,9 +17,9 @@ namespace NoQuestionsAsked
 
         public BulldozeToolExtender()
         {
-            _bulldozeTool = GameObject.FindObjectOfType<BulldozeTool>();
+            ModLogger.Debug("Creating BulldozeToolExtender");
+            _bulldozeTool = UnityEngine.Object.FindObjectOfType<BulldozeTool>();
             _buildingDeletedEvent = _bulldozeTool.GetType().GetEvent("m_BuildingDeleted", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            
         }
 
         public void DeleteBuildingImpl(ushort building)
